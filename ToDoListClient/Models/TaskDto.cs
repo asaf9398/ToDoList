@@ -1,6 +1,6 @@
-﻿using ToDoListServer.Enums;
+﻿using Common.Enums;
 
-namespace ToDoListServer.DTOs
+namespace ToDoListClient.Models
 {
     public class TaskDto
     {

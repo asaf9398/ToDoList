@@ -1,4 +1,4 @@
-﻿using ToDoListServer.DTOs;
+﻿using Common.DTOs;
 using ToDoListServer.Interfaces;
 using ToDoListServer.Models;
 

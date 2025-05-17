@@ -1,8 +1,8 @@
+using Common.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.ComponentModel;
 using System.Reflection.Metadata;
-using ToDoListServer.DTOs;
 using ToDoListServer.Hubs;
 using ToDoListServer.Interfaces;
 

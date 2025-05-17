@@ -1,4 +1,5 @@
-﻿using ToDoListServer.DTOs;
+﻿
+using Common.DTOs;
 
 namespace ToDoListServer.Interfaces
 {
