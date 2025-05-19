@@ -18,7 +18,8 @@ namespace ToDoListClient.Views
                 Description = task.Description,
                 Priority = task.Priority,
                 IsCompleted = task.IsCompleted,
-                LockedBy = task.LockedBy
+                LockedBy = task.LockedBy,
+                CreatedAt = task.CreatedAt
             };
 
             DataContext = EditedTask;

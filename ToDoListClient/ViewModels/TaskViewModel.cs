@@ -18,7 +18,14 @@ namespace ToDoListClient.ViewModels
             _task = task;
         }
 
+        public DateTime _createdAt { get; set; }
+
         public Guid Id => _task.Id;
+        public DateTime CreatedAt
+        {
+            get => _task.CreatedAt;
+            set { _task.CreatedAt = value; OnPropertyChanged(); }
+        }
         public string Title
         {
             get => _task.Title;
@@ -55,7 +62,8 @@ namespace ToDoListClient.ViewModels
             Description = this.Description,
             Priority = this.Priority,
             IsCompleted = this.IsCompleted,
-            LockedBy = this.LockedBy
+            LockedBy = this.LockedBy,
+            CreatedAt = this.CreatedAt
         };
 
         public bool IsLocked => !string.IsNullOrEmpty(LockedBy);

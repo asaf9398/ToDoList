@@ -39,7 +39,7 @@ namespace ToDoListServer.Services
                 Description = dto.Description,
                 Priority = dto.Priority,
                 IsCompleted = false,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = dto.CreatedAt,
             };
 
             var result = await _taskRepo.AddAsync(item);
@@ -144,7 +144,8 @@ namespace ToDoListServer.Services
             Description = item.Description,
             Priority = item.Priority,
             IsCompleted = item.IsCompleted,
-            LockedBy = item.LockedBy
+            LockedBy = item.LockedBy,
+            CreatedAt = item.CreatedAt,
         };
     }
 }

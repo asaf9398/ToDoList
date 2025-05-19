@@ -155,7 +155,8 @@ namespace ToDoListClient.ViewModels
                 Title = "",
                 Description = "",
                 Priority = TaskPriority.Low,
-                IsCompleted = false
+                IsCompleted = false,
+                CreatedAt = DateTime.Now
             };
 
             var editWindow = new EditTaskWindow(newTask);
