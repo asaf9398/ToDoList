@@ -9,6 +9,7 @@ using ToDoListClient.Services;
 using ToDoListClient.Helpers;
 using Common.Enums;
 using ToDoListClient.Views;
+using System.Windows;
 
 namespace ToDoListClient.ViewModels
 {
@@ -17,16 +18,17 @@ namespace ToDoListClient.ViewModels
         private readonly TaskApiService _apiService;
         private readonly SignalRService _signalRService;
 
-        public ObservableCollection<TaskDto> Tasks { get; set; } = new();
+        public ObservableCollection<TaskViewModel> Tasks { get; set; } = new();
 
-        private TaskDto? _selectedTask;
-        public TaskDto? SelectedTask
+        private TaskViewModel? _selectedTask;
+        public TaskViewModel? SelectedTask
         {
             get => _selectedTask;
             set
             {
                 _selectedTask = value;
                 OnPropertyChanged();
+                ((RelayCommand)DeleteCommand).RaiseCanExecuteChanged();
             }
         }
 
@@ -40,7 +42,7 @@ namespace ToDoListClient.ViewModels
 
             AddCommand = new RelayCommand(async _ => await AddTaskAsync());
             DeleteCommand = new RelayCommand(async _ => await DeleteTaskAsync(), _ => SelectedTask != null);
-           
+
             _ = InitializeAsync();
         }
 
@@ -70,15 +72,26 @@ namespace ToDoListClient.ViewModels
         {
             var tasks = await _apiService.GetAllAsync();
             Tasks.Clear();
-            foreach (var task in tasks)
-                Tasks.Add(task);
+
+            foreach (var task in tasks
+                .OrderBy(t => t.IsCompleted)
+                .ThenByDescending(t => t.Priority))
+            {
+                Tasks.Add(new TaskViewModel(task));
+            }
         }
+
 
         private void RegisterSignalREvents()
         {
             _signalRService.TaskAdded += task =>
             {
-                App.Current.Dispatcher.Invoke(() => Tasks.Add(task));
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    if (!Tasks.Any(t => t.Id == task.Id))
+                        Tasks.Add(new TaskViewModel(task));
+                    SortTasks();
+                });
             };
 
             _signalRService.TaskUpdated += task =>
@@ -86,21 +99,14 @@ namespace ToDoListClient.ViewModels
                 App.Current.Dispatcher.Invoke(() =>
                 {
                     var existing = Tasks.FirstOrDefault(t => t.Id == task.Id);
+
                     if (existing != null)
                     {
-                        var index = Tasks.IndexOf(existing);
-                        Tasks[index] = task;
+                        Tasks.Remove(existing);
                     }
-                });
-            };
 
-            _signalRService.TaskDeleted += id =>
-            {
-                App.Current.Dispatcher.Invoke(() =>
-                {
-                    var task = Tasks.FirstOrDefault(t => t.Id == id);
-                    if (task != null)
-                        Tasks.Remove(task);
+                    Tasks.Add(new TaskViewModel(task));
+                    SortTasks();
                 });
             };
 
@@ -111,6 +117,7 @@ namespace ToDoListClient.ViewModels
                     var task = Tasks.FirstOrDefault(t => t.Id == id);
                     if (task != null)
                         task.LockedBy = user;
+                    SortTasks();
                 });
             };
 
@@ -121,15 +128,33 @@ namespace ToDoListClient.ViewModels
                     var task = Tasks.FirstOrDefault(t => t.Id == id);
                     if (task != null)
                         task.LockedBy = null;
+                    SortTasks();
                 });
             };
+
+            _signalRService.TaskDeleted += id =>
+            {
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    var task = Tasks.FirstOrDefault(t => t.Id == id);
+                    if (task != null)
+                        Tasks.Remove(task);
+                    SortTasks();
+                });
+            };
+
+
         }
 
         private async Task AddTaskAsync()
         {
             var newTask = new TaskDto
             {
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
+                Title = "",
+                Description = "",
+                Priority = TaskPriority.Low,
+                IsCompleted = false
             };
 
             var editWindow = new EditTaskWindow(newTask);
@@ -138,9 +163,10 @@ namespace ToDoListClient.ViewModels
             if (result == true)
             {
                 var added = await _apiService.AddAsync(editWindow.EditedTask);
-                if (added != null)
+
+                if (added == null)
                 {
-                    Tasks.Add(added);
+                    MessageBox.Show($"The task did not be add due to server error!", "Adding Task Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -150,6 +176,17 @@ namespace ToDoListClient.ViewModels
             if (SelectedTask == null) return;
 
             await _apiService.DeleteAsync(SelectedTask.Id);
+        }
+
+        private void SortTasks()
+        {
+            var sorted = Tasks.OrderBy(t => t.IsCompleted)
+                              .ThenByDescending(t => t.Priority)
+                              .ToList();
+
+            Tasks.Clear();
+            foreach (var task in sorted)
+                Tasks.Add(task);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

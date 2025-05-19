@@ -48,6 +48,15 @@ namespace ToDoListClient.ViewModels
             get => _task.LockedBy;
             set { _task.LockedBy = value; OnPropertyChanged(); OnPropertyChanged(nameof(IsLocked)); OnPropertyChanged(nameof(IsLockedByMe)); }
         }
+        public TaskDto ToDto() => new TaskDto
+        {
+            Id = this.Id,
+            Title = this.Title,
+            Description = this.Description,
+            Priority = this.Priority,
+            IsCompleted = this.IsCompleted,
+            LockedBy = this.LockedBy
+        };
 
         public bool IsLocked => !string.IsNullOrEmpty(LockedBy);
         public bool IsLockedByMe => LockedBy == _currentUsername;

@@ -11,7 +11,6 @@ namespace ToDoListClient.Views
         {
             InitializeComponent();
 
-            // יצירת עותק כדי לא לשנות את המקור ישירות
             EditedTask = new TaskDto
             {
                 Id = task.Id,

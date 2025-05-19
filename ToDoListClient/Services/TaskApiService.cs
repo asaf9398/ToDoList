@@ -65,7 +65,7 @@ namespace ToDoListClient.Services
         {
             try
             {
-                var response = await _client.DeleteAsync($"?id={id}");
+                var response = await _client.DeleteAsync($"{_client.BaseAddress}/?id={id}");
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -78,7 +78,7 @@ namespace ToDoListClient.Services
         {
             try
             {
-                var response = await _client.PostAsync($"lock/{id}", null);
+                var response = await _client.PostAsync($"{_client.BaseAddress}/lock/{id}", null);
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -91,7 +91,7 @@ namespace ToDoListClient.Services
         {
             try
             {
-                var response = await _client.PostAsync($"unlock/{id}", null);
+                var response = await _client.PostAsync($"{_client.BaseAddress}/unlock/{id}", null);
                 return response.IsSuccessStatusCode;
             }
             catch

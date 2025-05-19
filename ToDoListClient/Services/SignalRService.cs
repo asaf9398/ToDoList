@@ -15,6 +15,7 @@ namespace ToDoListClient.Services
         public event Action<Guid>? TaskDeleted;
         public event Action<Guid, string>? TaskLocked;
         public event Action<Guid>? TaskUnlocked;
+        public bool IsConnected => _connection?.State == HubConnectionState.Connected;
 
         public async Task StartAsync()
         {
@@ -56,6 +57,5 @@ namespace ToDoListClient.Services
             }
         }
 
-        public bool IsConnected => _connection?.State == HubConnectionState.Connected;
     }
 }

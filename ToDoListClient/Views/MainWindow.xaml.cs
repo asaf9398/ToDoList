@@ -13,16 +13,17 @@ namespace ToDoListClient.Views
 
         private async void TaskList_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (DataContext is not MainViewModel vm || vm.SelectedTask == null)
+            if (DataContext is not MainViewModel mainViewModel || mainViewModel.SelectedTask == null)
                 return;
 
-            var task = vm.SelectedTask;
+            var taskVM = mainViewModel.SelectedTask;
+            var task = taskVM.ToDto();
 
-            // ננעל את המשימה
-            bool locked = await vm.LockTaskAsync(task.Id);
+            bool locked = await mainViewModel.LockTaskAsync(task.Id);
+            
             if (!locked)
             {
-                MessageBox.Show($"Task is currently being edited by: {task.LockedBy}", "Locked", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("This task is currently locked by another user.", "Locked", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -31,11 +32,13 @@ namespace ToDoListClient.Views
 
             if (result == true)
             {
-                await vm.UpdateTaskAsync(editWindow.EditedTask);
+                await mainViewModel.UpdateTaskAsync(editWindow.EditedTask);
             }
 
-            await vm.UnlockTaskAsync(task.Id);
+            await mainViewModel.UnlockTaskAsync(task.Id);
         }
+
+
 
     }
 }
