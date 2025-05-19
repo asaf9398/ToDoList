@@ -21,7 +21,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0 0 0 10" HorizontalAlignment="Left" >
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0 0 0 10" HorizontalAlignment="Left">
             <Button Content="➕ Add" Command="{Binding AddCommand}" Margin="0,0,10,0"/>
             <Button Content="❌ Delete" Command="{Binding DeleteCommand}" Margin="0,0,10,0"/>
         </StackPanel>
@@ -50,8 +50,15 @@
                             <TextBlock Text="{Binding Description}" TextWrapping="Wrap" />
                             <TextBlock FontStyle="Italic" Foreground="DarkGray" FontSize="12"
                                        Text="{Binding Priority}" />
+                            <TextBlock Foreground="Gray" FontSize="11"
+                                       Text="{Binding CreatedAt, StringFormat=Created: {0:dd/MM/yyyy HH:mm}}" />
+                            <CheckBox Content="Completed"
+                                      IsChecked="{Binding IsCompleted, Mode=TwoWay}"
+                                      Margin="0,5,0,0"
+                                      Checked="CompletedCheckBox_Changed"
+                                      Unchecked="CompletedCheckBox_Changed"/>
                             <TextBlock Foreground="Red" FontSize="12"
-                                       Text="{Binding LockedBy, StringFormat=🔒 Locked by: {0}}" 
+                                       Text="{Binding LockedBy, StringFormat=🔒 Locked by: {0}}"
                                        Visibility="{Binding LockedBy, Converter={StaticResource NullToVisibilityConverter}}"/>
                         </StackPanel>
                     </Border>

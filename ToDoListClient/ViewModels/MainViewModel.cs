@@ -59,6 +59,7 @@ namespace ToDoListClient.ViewModels
         public async Task UpdateTaskAsync(TaskDto task)
         {
             await _apiService.UpdateAsync(task);
+            SortTasks();
         }
 
         private async Task InitializeAsync()

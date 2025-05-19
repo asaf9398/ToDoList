@@ -1,5 +1,7 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using ToDoListClient.Models;
 using ToDoListClient.ViewModels;
 
 namespace ToDoListClient.Views
@@ -10,17 +12,27 @@ namespace ToDoListClient.Views
         {
             InitializeComponent();
         }
+        private async void CompletedCheckBox_Changed(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox cb && cb.DataContext is TaskViewModel task)
+            {
+                if (DataContext is MainViewModel mainViewModel)
+                {
+                    await mainViewModel.UpdateTaskAsync(task.ToDto());
+                }
+            }
+        }
 
         private async void TaskList_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (DataContext is not MainViewModel mainViewModel || mainViewModel.SelectedTask == null)
                 return;
 
-            var taskVM = mainViewModel.SelectedTask;
-            var task = taskVM.ToDto();
+            var taskViewModel = mainViewModel.SelectedTask;
+            var task = taskViewModel.ToDto();
 
             bool locked = await mainViewModel.LockTaskAsync(task.Id);
-            
+
             if (!locked)
             {
                 MessageBox.Show("This task is currently locked by another user.", "Locked", MessageBoxButton.OK, MessageBoxImage.Warning);

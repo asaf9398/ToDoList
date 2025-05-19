@@ -11,5 +11,6 @@ namespace Common.DTOs
         public TaskPriority Priority { get; set; } = TaskPriority.Low;
         public bool IsCompleted { get; set; }
         public string LockedBy { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }
