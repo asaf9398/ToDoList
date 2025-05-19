@@ -124,7 +124,7 @@ namespace ToDoListServer.Services
                 throw new Exception("Task not found");
             }
 
-            if (task.LockedBy != username)
+            if (task.LockedBy != username && task.LockedBy != null)
             {
                 return false;
             }

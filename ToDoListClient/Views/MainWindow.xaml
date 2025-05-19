@@ -24,14 +24,13 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0 0 0 10" HorizontalAlignment="Left" >
             <Button Content="➕ Add" Command="{Binding AddCommand}" Margin="0,0,10,0"/>
             <Button Content="❌ Delete" Command="{Binding DeleteCommand}" Margin="0,0,10,0"/>
-            <Button Content="🔒 Lock" Command="{Binding LockCommand}" Margin="0,0,10,0"/>
-            <Button Content="🔓 Unlock" Command="{Binding UnlockCommand}" />
         </StackPanel>
 
         <ListView Grid.Row="1"
                   ItemsSource="{Binding Tasks}"
                   SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
                   Margin="0,0,0,10"
+                  MouseDoubleClick="TaskList_DoubleClick"
                   Name="TaskList">
             <ListView.ItemTemplate>
                 <DataTemplate>

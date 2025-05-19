@@ -8,6 +8,7 @@ using ToDoListClient.Models;
 using ToDoListClient.Services;
 using ToDoListClient.Helpers;
 using Common.Enums;
+using ToDoListClient.Views;
 
 namespace ToDoListClient.ViewModels
 {
@@ -31,8 +32,6 @@ namespace ToDoListClient.ViewModels
 
         public ICommand AddCommand { get; }
         public ICommand DeleteCommand { get; }
-        public ICommand LockCommand { get; }
-        public ICommand UnlockCommand { get; }
 
         public MainViewModel()
         {
@@ -41,10 +40,23 @@ namespace ToDoListClient.ViewModels
 
             AddCommand = new RelayCommand(async _ => await AddTaskAsync());
             DeleteCommand = new RelayCommand(async _ => await DeleteTaskAsync(), _ => SelectedTask != null);
-            LockCommand = new RelayCommand(async _ => await LockTaskAsync(), _ => SelectedTask != null);
-            UnlockCommand = new RelayCommand(async _ => await UnlockTaskAsync(), _ => SelectedTask != null);
-
+           
             _ = InitializeAsync();
+        }
+
+        public async Task<bool> LockTaskAsync(Guid id)
+        {
+            return await _apiService.LockTaskAsync(id);
+        }
+
+        public async Task UnlockTaskAsync(Guid id)
+        {
+            await _apiService.UnlockTaskAsync(id);
+        }
+
+        public async Task UpdateTaskAsync(TaskDto task)
+        {
+            await _apiService.UpdateAsync(task);
         }
 
         private async Task InitializeAsync()
@@ -117,14 +129,20 @@ namespace ToDoListClient.ViewModels
         {
             var newTask = new TaskDto
             {
-                Id = Guid.NewGuid(),
-                Title = "New Task",
-                Description = "Task's Description...",
-                Priority = TaskPriority.Low,
-                IsCompleted = false
+                Id = Guid.NewGuid()
             };
 
-            await _apiService.AddAsync(newTask);
+            var editWindow = new EditTaskWindow(newTask);
+            var result = editWindow.ShowDialog();
+
+            if (result == true)
+            {
+                var added = await _apiService.AddAsync(editWindow.EditedTask);
+                if (added != null)
+                {
+                    Tasks.Add(added);
+                }
+            }
         }
 
         private async Task DeleteTaskAsync()
@@ -132,20 +150,6 @@ namespace ToDoListClient.ViewModels
             if (SelectedTask == null) return;
 
             await _apiService.DeleteAsync(SelectedTask.Id);
-        }
-
-        private async Task LockTaskAsync()
-        {
-            if (SelectedTask == null) return;
-
-            await _apiService.LockTaskAsync(SelectedTask.Id);
-        }
-
-        private async Task UnlockTaskAsync()
-        {
-            if (SelectedTask == null) return;
-
-            await _apiService.UnlockTaskAsync(SelectedTask.Id);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
