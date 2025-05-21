@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+﻿using Common.DTOs;
+using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Threading.Tasks;
 using ToDoListClient.Helpers;
-using ToDoListClient.Models;
 
 namespace ToDoListClient.Services
 {

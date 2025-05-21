@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListClient", "ToDoListClient\ToDoListClient.csproj", "{CB1F83F8-E1AA-4200-AA2B-ADEB55F0AA61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListClient", "ToDoListClient\ToDoListClient.csproj", "{CB1F83F8-E1AA-4200-AA2B-ADEB55F0AA61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListServer", "ToDoListServer\ToDoListServer.csproj", "{AB3A732A-5A68-46F6-8151-AD55E6A7D310}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListServer", "ToDoListServer\ToDoListServer.csproj", "{AB3A732A-5A68-46F6-8151-AD55E6A7D310}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{6EA1DF18-7B7D-49D7-B79E-EFAA289E223D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListServer.Tests", "ToDoListServer.Tests\ToDoListServer.Tests.csproj", "{CFA47B6F-DAB4-4D4E-A7DA-B083D948593D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{6EA1DF18-7B7D-49D7-B79E-EFAA289E223D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EA1DF18-7B7D-49D7-B79E-EFAA289E223D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EA1DF18-7B7D-49D7-B79E-EFAA289E223D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFA47B6F-DAB4-4D4E-A7DA-B083D948593D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFA47B6F-DAB4-4D4E-A7DA-B083D948593D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFA47B6F-DAB4-4D4E-A7DA-B083D948593D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFA47B6F-DAB4-4D4E-A7DA-B083D948593D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

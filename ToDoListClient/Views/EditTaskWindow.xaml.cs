@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using ToDoListClient.Models;
+﻿using Common.DTOs;
+using System.Windows;
 
 namespace ToDoListClient.Views
 {

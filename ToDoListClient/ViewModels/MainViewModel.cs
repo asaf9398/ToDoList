@@ -4,12 +4,12 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ToDoListClient.Models;
 using ToDoListClient.Services;
 using ToDoListClient.Helpers;
 using Common.Enums;
 using ToDoListClient.Views;
 using System.Windows;
+using Common.DTOs;
 
 namespace ToDoListClient.ViewModels
 {

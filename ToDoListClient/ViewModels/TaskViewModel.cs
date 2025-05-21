@@ -1,10 +1,10 @@
-﻿using Common.Enums;
+﻿using Common.DTOs;
+using Common.Enums;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using ToDoListClient.Helpers;
-using ToDoListClient.Models;
 
 namespace ToDoListClient.ViewModels
 {
