@@ -1,0 +1,30 @@
+IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'ToDoDb')
+BEGIN
+    CREATE DATABASE ToDoDb;
+END
+GO
+
+USE ToDoDb;
+GO
+
+CREATE TABLE Tasks (
+    Id UNIQUEIDENTIFIER PRIMARY KEY,
+    Title NVARCHAR(MAX) NOT NULL,
+    Description NVARCHAR(MAX) NOT NULL,
+    Priority INT NOT NULL,
+    IsCompleted BIT NOT NULL,
+    CreatedAt DATETIME2 NOT NULL,
+    LockedBy NVARCHAR(MAX),
+    LockTimestamp DATETIME2
+);
+GO
+
+CREATE TABLE TaskAuditLogs (
+    Id UNIQUEIDENTIFIER PRIMARY KEY,
+    TaskId UNIQUEIDENTIFIER NOT NULL,
+    Action NVARCHAR(MAX) NOT NULL,
+    Username NVARCHAR(MAX) NOT NULL,
+    Timestamp DATETIME2 NOT NULL,
+    Description NVARCHAR(MAX)
+);
+GO
