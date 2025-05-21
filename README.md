@@ -150,10 +150,7 @@ dotnet run --project ToDoListClient
  Command Pattern – via ICommand in WPF:
 - Commands (RelayCommand) are bound to UI buttons for Add/Delete operations.
 - Enables encapsulating user actions and handling UI logic cleanly from the ViewModel.
-- Observer Pattern (via SignalR)
-- The client "subscribes" to server-pushed updates.
-- Enables real-time propagation of state changes to all observers (clients).
- 
+
  Repository Pattern – in the Server Backend:
 - Abstracts database access logic behind interfaces.
 - Promotes decoupling and simplifies mocking in unit testing.
@@ -161,6 +158,7 @@ dotnet run --project ToDoListClient
 
  Observer Pattern (SignalR):
 - SignalR enables a publish/subscribe mechanism — the server notifies all subscribed clients of changes using Clients.All.SendAsync(...).
+- The client "subscribes" to server-pushed updates.
 - Enables real-time updates to clients without polling.
 
  DTO Pattern (Data Transfer Object):
