@@ -42,7 +42,7 @@ This project is a WPF-based ToDo application connected to a .NET 8 Web API serve
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download)
 - [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
-- Visual Studio (I use 2022..)
+- [Visual Studio (For this project I used 2022...)](https://visualstudio.microsoft.com/downloads/)
 
 ---
 
@@ -167,7 +167,11 @@ dotnet run --project ToDoListClient
 - Instead of exposing the database entity directly, the system uses TaskDto to transfer only necessary data.
 - Enhances security, performance, and allows shaping the response as needed.
 
+## Demonstration video link(Youtube)
+- [Youtube](https://youtu.be/QRMGNnEU-Uo)
+
 ## Credits
 Project by Asaf Yosef
 Assignment: CityShob .NET WPF + Web API Homework  
 May 2025
+
