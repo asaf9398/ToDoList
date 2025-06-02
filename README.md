@@ -170,6 +170,6 @@ dotnet run --project ToDoListClient
 
 ## Credits
 Project by Asaf Yosef
-Assignment: CityShob .NET WPF + Web API Homework  
+.NET WPF + Web API  
 May 2025
 
